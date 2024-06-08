@@ -4,6 +4,7 @@ An in-browser compiler made with `flex` and `bison` that translates a subset of 
 
 This was done as series of four assignments for the course [***CSE310 - Compiler Sessional***](https://github.com/Abir66/CSE-310-Compiler-Sessional/tree/main) at BUET.
 
+`Emscripten` was used to convert the project to `WebAssembly` and `JavaScript` so that it can be run in the browser.
 
 ## Building
 
