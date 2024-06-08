@@ -3,11 +3,16 @@
 	import { Button } from '$lib/components/ui/button';
 	import { HamburgerMenu } from 'radix-icons-svelte';
 	import { GithubLogo } from 'radix-icons-svelte';
+	import { goto } from '$app/navigation';
+
+	// import { ModeWatcher } from 'mode-watcher';
+	// import { Sun, Moon } from 'radix-icons-svelte';
+	// import { toggleMode } from 'mode-watcher';
 
 	import clogo from '$lib/assets/c--logo.svg'
 	
 	let showMenu = false;
-	
+
 	function toggleNavbar() {
 		showMenu = !showMenu;
 	}
@@ -17,7 +22,7 @@
 
 
 <div>
-	<div class="border-b-2 border-zinc-300 dark:border-zinc-800">
+	<div class="border-b-2 border-zinc-300 ">
 		<nav class="container mx-auto px-[5%] py-4 md:flex md:items-center md:justify-between">
 			<div class="flex items-center justify-between">
 				<!-- <img src={clogo} alt="C"/> -->
@@ -32,17 +37,23 @@
 			>
 				<div class="flex text-sm flex-col space-y-5 md:ml-10 md:flex-row md:space-x-5  md:space-y-0 }">
 					<a href={`/compiler`}>Compiler</a>
-					<!-- <a href="/problems">Problems</a>
-					<a href="/blogs">Blogs</a> -->
+					<a href={`/grammar`}>Grammar</a>
 				</div>
 
 				<div class="flex flex-col md:flex-row space-y-5 md:space-x-5 md:space-y-0">
-					
+					<a href="https://github.com/Abir66/C--">
+						<Button size="sm">
+							<GithubLogo class="mr-2"/>
+							<span>Github</span>
+						</Button>
+					</a>
 				</div>
 			</div>
 		</nav>
 	</div>
 </div>
+
+
 
 
 

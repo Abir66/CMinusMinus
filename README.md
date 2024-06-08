@@ -1,31 +1,34 @@
-# create-svelte
+# C--
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+An in-browser compiler made with `flex` and `bison` that translates a subset of **C code** into assembly language for the **Intel 8086 processor**.
 
-## Creating a project
+This was done as series of four assignments for the course [***CSE310 - Compiler Sessional***](https://github.com/Abir66/CSE-310-Compiler-Sessional/tree/main) at BUET.
 
-If you're seeing this, you've probably already done this step. Congrats!
+
+## Building
+
+First compile the compiler
 
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
+# go to the wasm directory
+cd wasm
 
-# create a new project in my-app
-npm create svelte@latest my-app
+# compile the compiler
+./run.sh
 ```
 
-## Developing
+This will build the parser and move the `wasm` and `js` to `/src/lib/compiler` directory
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
+
+Next, for sveltekit, start a development server:
+    
 ```bash
 npm run dev
 
 # or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
-
-## Building
 
 To create a production version of your app:
 
@@ -35,4 +38,3 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

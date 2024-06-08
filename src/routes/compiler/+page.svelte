@@ -7,11 +7,32 @@
     import * as Tabs from "$lib/components/ui/tabs";
     import { Copy } from 'radix-icons-svelte';
 
-    let code = `#include <stdio.h>
-int main(){
-    
-    println("huh");
+    let code = `#include<stdio.h>
+#include<stdlib.h>
+// include statesments are ignored.
+// actually lines starting with # are ignored.
 
+void fun(int x){
+    int i;
+    for(i=0; i<x; i++){
+        println(i);
+    }
+}
+
+int main()
+{
+    int a, b, c;
+    println("Enter two numbers- ");
+    scan(a);
+    scan(b);
+
+    c = a + b;
+    print("Sum of a and b = ");
+    println(c);
+
+    fun(5);
+
+    return 0;
 }
 `;
 
@@ -20,7 +41,7 @@ int main(){
     let error = '';
     let log = '';
     let parseTree = '';
-    let output_tab = '';
+    let output_tab = 'asm';
 
 
 
@@ -43,9 +64,8 @@ int main(){
 
         mod = await Module();
         mod.FS.mkdir('/files');
-        mod.FS.writeFile('./files/input.c', '');
-        clear_outputs();
         mod.FS.writeFile('./files/input.c', code);
+
 
         var result = mod.ccall('main', 'number', null, null)
         asm = mod.FS.readFile('./files/code.asm', { encoding: 'utf8' });
@@ -57,15 +77,7 @@ int main(){
         if(error){
             output_tab = 'error';
         }
-
-
-        // let empty_string = '';
-        // mod.FS.writeFile('./files/input.c', empty_string);
-        // mod.FS.writeFile('./files/code.asm', empty_string);
-        // mod.FS.writeFile('./files/optimized_code.asm', empty_string);
-        // mod.FS.writeFile('./files/error.txt', empty_string);
-        // mod.FS.writeFile('./files/log.txt', empty_string);
-        // mod.FS.writeFile('./files/parseTree.txt', empty_string);
+        
 
 
 
@@ -76,8 +88,9 @@ int main(){
 </script>
 
 
-<div class="flex flex-grow overflow-hidden">
-    <div class="w-1/2 overflow-hidden border-r pr-5">
+<div class="flex flex-col lg:flex-row flex-grow lg:overflow-hidden w-full">
+    
+    <div class="w-full lg:w-1/2  overflow-auto  border-r pr-5">
        
         <Tabs.Root value="code" class="w-full">
             <Tabs.List class="w-full justify-between bg-inherit">
@@ -111,14 +124,13 @@ int main(){
     </div>
 
    
-    <div class="w-1/2 overflow-auto">
-        <Tabs.Root value={output_tab} class="w-full">
+    <div class="w-full lg:w-1/2 overflow-auto">
+        <Tabs.Root bind:value={output_tab} class="w-full">
             <Tabs.List class="w-full justify-between">
                 <div class="w-full justify-start gap-x-5">
                     <Tabs.Trigger value="asm">Assembly</Tabs.Trigger>
                     <Tabs.Trigger value="optimized_asm">Optimized-Assembly</Tabs.Trigger>
                     <Tabs.Trigger value="error">Error</Tabs.Trigger>
-                    <Tabs.Trigger value="log">Log</Tabs.Trigger>
                     <Tabs.Trigger value="parseTree">Parse Tree</Tabs.Trigger>
                 </div>                
             </Tabs.List>
@@ -126,6 +138,8 @@ int main(){
             <Tabs.Content value="asm">
                 <CodeMirror class="w-full h-full text-xl overflow-auto"
                     bind:value={asm}
+                    tabSize={4}
+                    readonly={true}
                     styles={{
                         ".cm-gutters": {
                             backgroundColor: "inherit",
@@ -137,6 +151,8 @@ int main(){
             <Tabs.Content value="optimized_asm">
                 <CodeMirror class="w-full h-full text-xl overflow-auto"
                     bind:value={optimized_asm}
+                    tabSize={4}
+                    readonly={true}
                     styles={{
                         ".cm-gutters": {
                             backgroundColor: "inherit",
@@ -148,6 +164,8 @@ int main(){
             <Tabs.Content value="error">
                 <CodeMirror class="w-full h-full text-xl overflow-auto"
                     bind:value={error}
+                    tabSize={4}
+                    readonly={true}
                     styles={{
                         ".cm-gutters": {
                             backgroundColor: "inherit",
@@ -156,24 +174,13 @@ int main(){
                 />
             </Tabs.Content>
 
-            <Tabs.Content value="log">
-                <CodeMirror class="w-full h-full text-xl overflow-auto"
-                    bind:value={log}
-                    tabSize={4}
-                    lineWrapping={true}
-                    styles={{
-                        ".cm-gutters": {
-                            backgroundColor: "inherit",
-                        }
-                    }}
-                />
-            </Tabs.Content>
 
             <Tabs.Content value="parseTree">
                 <CodeMirror class="w-full h-full text-xl overflow-auto"
                     bind:value={parseTree}
                     tabSize={4}
                     lineWrapping={true}
+                    readonly={true}
                     styles={{
                         ".cm-gutters": {
                             backgroundColor: "inherit",
@@ -191,12 +198,3 @@ int main(){
     </div>
 
 </div>
-
-
-
-
-<!-- <h1>This is a heading</h1>
-<textarea bind:value={content}></textarea>
-<button on:click={myFunction}>Click me</button>
-
-<textarea bind:value={output}></textarea> -->

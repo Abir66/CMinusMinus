@@ -18,6 +18,7 @@ echo 'Generated the scanner object file'
 
 
 emcc $bin_folder/y.o $bin_folder/l.o -fsanitize=none  -o ../src/lib/compiler/1905066_parser.js\
+    --embed-file ./println_instructions.txt\
     -s NO_EXIT_RUNTIME=1 \
     -s EXPORTED_FUNCTIONS='["_main"]' \
     -s EXPORTED_RUNTIME_METHODS='["ccall","cwrap", "FS"]' \
@@ -27,6 +28,6 @@ emcc $bin_folder/y.o $bin_folder/l.o -fsanitize=none  -o ../src/lib/compiler/190
     -s INITIAL_MEMORY=64mb\
     -sENVIRONMENT=web \
 
-
+# cp ./bin/1905066_parser.data ../src/lib/compiler/1905066_parser.data
 
 echo 'All ready, running'

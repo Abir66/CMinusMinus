@@ -2,7 +2,7 @@
 node_modules
 /build
 /wasm/bin
-/src/lib/compiler
+# /src/lib/compiler
 /.svelte-kit
 /package
 .env

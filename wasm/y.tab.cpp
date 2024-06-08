@@ -3074,7 +3074,7 @@ yyreturn:
 extern "C" {
 int main()
 {
-	printf("starting. Hello World\n");
+	printf("starting compilation\n");
 
 
 	init_count();
