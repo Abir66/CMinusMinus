@@ -41,7 +41,7 @@
 				</div>
 
 				<div class="flex flex-col md:flex-row space-y-5 md:space-x-5 md:space-y-0">
-					<a href="https://github.com/Abir66/C--">
+					<a href="https://github.com/Abir66/CMinusMinus">
 						<Button size="sm">
 							<GithubLogo class="mr-2"/>
 							<span>Github</span>
