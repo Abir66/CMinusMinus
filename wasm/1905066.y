@@ -563,6 +563,7 @@ expression : logic_expression {
 		printLog("expression : logic_expression");
 		$$ = new SymbolInfo("expression", "non-terminal");
 		$$->copyICGData($1);
+		$$->setDataType($1->getDataType()); // Added new. 13.9.2024
 		$$->addChildren($1);
 	}
 	| variable ASSIGNOP logic_expression {
@@ -622,6 +623,7 @@ logic_expression : rel_expression {
 		printLog("logic_expression : rel_expression");
 		$$ = new SymbolInfo("logic_expression", "non-terminal");
 		$$->copyICGData($1);
+		$$->setDataType($1->getDataType()); // Added new. 13.9.2024
 		$$->addChildren($1);
 	}
 	| rel_expression LOGICOP M rel_expression {

@@ -607,10 +607,10 @@ static const yytype_int16 yyrline[] =
      184,   184,   193,   218,   224,   230,   238,   245,   253,   261,
      272,   272,   283,   283,   294,   299,   325,   333,   333,   333,
      356,   366,   385,   385,   419,   424,   429,   439,   446,   454,
-     462,   470,   474,   479,   489,   508,   542,   549,   562,   568,
-     621,   627,   664,   671,   705,   712,   734,   742,   796,   817,
-     848,   859,   872,   934,   944,   956,   963,   979,   998,  1004,
-    1010,  1017
+     462,   470,   474,   479,   489,   508,   542,   549,   562,   569,
+     622,   629,   666,   673,   707,   714,   736,   744,   798,   819,
+     850,   861,   874,   936,   946,   958,   965,   981,  1000,  1006,
+    1012,  1019
 };
 #endif
 
@@ -2277,13 +2277,14 @@ yyreduce:
 		printLog("expression : logic_expression");
 		(yyval.symbolInfo) = new SymbolInfo("expression", "non-terminal");
 		(yyval.symbolInfo)->copyICGData((yyvsp[0].symbolInfo));
+		(yyval.symbolInfo)->setDataType((yyvsp[0].symbolInfo)->getDataType()); // Added new. 13.9.2024
 		(yyval.symbolInfo)->addChildren((yyvsp[0].symbolInfo));
 	}
-#line 2283 "y.tab.cpp"
+#line 2284 "y.tab.cpp"
     break;
 
   case 59:
-#line 568 "1905066.y"
+#line 569 "1905066.y"
                                              {
 		printLog("expression : variable ASSIGNOP logic_expression");
 		(yyval.symbolInfo) = new SymbolInfo("expression", "non-terminal");
@@ -2335,22 +2336,23 @@ yyreduce:
 		genCode("\tPUSH AX");
 		(yyval.symbolInfo)->clearNextList();
 	}
-#line 2339 "y.tab.cpp"
+#line 2340 "y.tab.cpp"
     break;
 
   case 60:
-#line 621 "1905066.y"
+#line 622 "1905066.y"
                                   {
 		printLog("logic_expression : rel_expression");
 		(yyval.symbolInfo) = new SymbolInfo("logic_expression", "non-terminal");
 		(yyval.symbolInfo)->copyICGData((yyvsp[0].symbolInfo));
+		(yyval.symbolInfo)->setDataType((yyvsp[0].symbolInfo)->getDataType()); // Added new. 13.9.2024
 		(yyval.symbolInfo)->addChildren((yyvsp[0].symbolInfo));
 	}
-#line 2350 "y.tab.cpp"
+#line 2352 "y.tab.cpp"
     break;
 
   case 61:
-#line 627 "1905066.y"
+#line 629 "1905066.y"
                                                   {
 		printLog("logic_expression : rel_expression LOGICOP rel_expression");
 		(yyval.symbolInfo) = new SymbolInfo("logic_expression", "non-terminal");
@@ -2386,11 +2388,11 @@ yyreduce:
 		}
 		genCode("\tPUSH AX");
 	}
-#line 2390 "y.tab.cpp"
+#line 2392 "y.tab.cpp"
     break;
 
   case 62:
-#line 664 "1905066.y"
+#line 666 "1905066.y"
                                    {
 		printLog("rel_expression : simple_expression");
 		(yyval.symbolInfo) = new SymbolInfo("rel_expression", "non-terminal");
@@ -2398,11 +2400,11 @@ yyreduce:
 		(yyval.symbolInfo)->setDataType((yyvsp[0].symbolInfo)->getDataType());
 		(yyval.symbolInfo)->addChildren((yyvsp[0].symbolInfo));
 	}
-#line 2402 "y.tab.cpp"
+#line 2404 "y.tab.cpp"
     break;
 
   case 63:
-#line 671 "1905066.y"
+#line 673 "1905066.y"
                                                     {
 		printLog("rel_expression : simple_expression RELOP simple_expression");
 		(yyval.symbolInfo) = new SymbolInfo("rel_expression", "non-terminal");
@@ -2435,11 +2437,11 @@ yyreduce:
 		
 		genCode("\tJMP ");
 	}
-#line 2439 "y.tab.cpp"
+#line 2441 "y.tab.cpp"
     break;
 
   case 64:
-#line 705 "1905066.y"
+#line 707 "1905066.y"
                          {
 		printLog("simple_expression : term");
 		(yyval.symbolInfo) = new SymbolInfo("simple_expression", "non-terminal");
@@ -2447,11 +2449,11 @@ yyreduce:
 		(yyval.symbolInfo)->setDataType((yyvsp[0].symbolInfo)->getDataType());
 		(yyval.symbolInfo)->addChildren((yyvsp[0].symbolInfo));
 	}
-#line 2451 "y.tab.cpp"
+#line 2453 "y.tab.cpp"
     break;
 
   case 65:
-#line 712 "1905066.y"
+#line 714 "1905066.y"
                                        {
 		printLog("simple_expression : simple_expression ADDOP term");
 		(yyval.symbolInfo) = new SymbolInfo("simple_expression", "non-terminal");
@@ -2472,11 +2474,11 @@ yyreduce:
 		else genCode("\tSUB AX, BX");
 		genCode("\tPUSH AX");
 	}
-#line 2476 "y.tab.cpp"
+#line 2478 "y.tab.cpp"
     break;
 
   case 66:
-#line 734 "1905066.y"
+#line 736 "1905066.y"
                         {
 		printLog("term : unary_expression");
 		(yyval.symbolInfo) = new SymbolInfo("term", "non-terminal");
@@ -2485,11 +2487,11 @@ yyreduce:
 
 		(yyval.symbolInfo)->copyICGData((yyvsp[0].symbolInfo));
 	}
-#line 2489 "y.tab.cpp"
+#line 2491 "y.tab.cpp"
     break;
 
   case 67:
-#line 742 "1905066.y"
+#line 744 "1905066.y"
                                       {
 		printLog("term : term MULOP unary_expression");
 		(yyval.symbolInfo) = new SymbolInfo("term", "non-terminal");
@@ -2542,11 +2544,11 @@ yyreduce:
 		*/
 		
 	}
-#line 2546 "y.tab.cpp"
+#line 2548 "y.tab.cpp"
     break;
 
   case 68:
-#line 796 "1905066.y"
+#line 798 "1905066.y"
                                           {
 		printLog("unary_expression : ADDOP unary_expression");
 		(yyval.symbolInfo) = new SymbolInfo("unary_expression", "non-terminal");
@@ -2568,11 +2570,11 @@ yyreduce:
 			genCode("\tPUSH AX");
 		}
 	}
-#line 2572 "y.tab.cpp"
+#line 2574 "y.tab.cpp"
     break;
 
   case 69:
-#line 817 "1905066.y"
+#line 819 "1905066.y"
                                {
 		printLog("unary_expression : NOT unary_expression");
 		(yyval.symbolInfo) = new SymbolInfo("unary_expression", "non-terminal");
@@ -2604,11 +2606,11 @@ yyreduce:
 		(yyval.symbolInfo)->setFalseList((yyvsp[0].symbolInfo)->getTrueList());
 
 	}
-#line 2608 "y.tab.cpp"
+#line 2610 "y.tab.cpp"
     break;
 
   case 70:
-#line 848 "1905066.y"
+#line 850 "1905066.y"
                  {
 		printLog("unary_expression : factor");
 		(yyval.symbolInfo) = new SymbolInfo("unary_expression", "non-terminal");
@@ -2618,11 +2620,11 @@ yyreduce:
 
 		(yyval.symbolInfo)->copyICGData((yyvsp[0].symbolInfo));
 	}
-#line 2622 "y.tab.cpp"
+#line 2624 "y.tab.cpp"
     break;
 
   case 71:
-#line 859 "1905066.y"
+#line 861 "1905066.y"
                   {
 		printLog("factor : variable");
 		(yyval.symbolInfo) = new SymbolInfo("factor", "non-terminal");
@@ -2636,11 +2638,11 @@ yyreduce:
 		genCode("\tPUSH AX");
 
 	}
-#line 2640 "y.tab.cpp"
+#line 2642 "y.tab.cpp"
     break;
 
   case 72:
-#line 872 "1905066.y"
+#line 874 "1905066.y"
                                          {
 		printLog("factor : ID LPAREN argument_list RPAREN");
 		(yyval.symbolInfo) = new SymbolInfo("factor", "non-terminal");
@@ -2703,11 +2705,11 @@ yyreduce:
 		if((yyval.symbolInfo)->getDataType() != "VOID") genCode("\tPUSH AX");
 		else genCode("\tPUSH 0");
 	}
-#line 2707 "y.tab.cpp"
+#line 2709 "y.tab.cpp"
     break;
 
   case 73:
-#line 934 "1905066.y"
+#line 936 "1905066.y"
                                    {
 		printLog("factor : LPAREN expression RPAREN");
 		(yyval.symbolInfo) = new SymbolInfo("factor", "non-terminal");
@@ -2718,11 +2720,11 @@ yyreduce:
 		(yyval.symbolInfo)->setTrueList((yyvsp[-1].symbolInfo)->getTrueList());
 		(yyval.symbolInfo)->setFalseList((yyvsp[-1].symbolInfo)->getFalseList());
 	}
-#line 2722 "y.tab.cpp"
+#line 2724 "y.tab.cpp"
     break;
 
   case 74:
-#line 944 "1905066.y"
+#line 946 "1905066.y"
                     {
 		printLog("factor : CONST_INT");
 		(yyval.symbolInfo) = new SymbolInfo("factor", "non-terminal");
@@ -2735,11 +2737,11 @@ yyreduce:
 		// genCode("\tPUSH AX");
 		genCode("\tPUSH " + (yyvsp[0].symbolInfo)->getName());
 	}
-#line 2739 "y.tab.cpp"
+#line 2741 "y.tab.cpp"
     break;
 
   case 75:
-#line 956 "1905066.y"
+#line 958 "1905066.y"
                       {
 		printLog("factor : CONST_FLOAT");
 		(yyval.symbolInfo) = new SymbolInfo("factor", "non-terminal");
@@ -2747,11 +2749,11 @@ yyreduce:
 		(yyval.symbolInfo)->setValue((yyvsp[0].symbolInfo)->getName());
 		(yyval.symbolInfo)->addChildren((yyvsp[0].symbolInfo));
 	}
-#line 2751 "y.tab.cpp"
+#line 2753 "y.tab.cpp"
     break;
 
   case 76:
-#line 963 "1905066.y"
+#line 965 "1905066.y"
                          {
 		printLog("factor: variable INCOP");
 		(yyval.symbolInfo) = new SymbolInfo("factor", "non-terminal");
@@ -2768,11 +2770,11 @@ yyreduce:
 		// ---------------------Code generation---------------------
 		genINC_DEC((yyvsp[-1].symbolInfo), "++");
 	}
-#line 2772 "y.tab.cpp"
+#line 2774 "y.tab.cpp"
     break;
 
   case 77:
-#line 979 "1905066.y"
+#line 981 "1905066.y"
                          {
 		printLog("factor: variable DECOP");
 		
@@ -2790,31 +2792,31 @@ yyreduce:
 		// ---------------------Code generation---------------------
 		genINC_DEC((yyvsp[-1].symbolInfo), "--");
 	}
-#line 2794 "y.tab.cpp"
+#line 2796 "y.tab.cpp"
     break;
 
   case 78:
-#line 998 "1905066.y"
+#line 1000 "1905066.y"
                           {
 		printLog("argument_list : arguments");
 		(yyval.symbolInfo) = new SymbolInfo("argument_list", "non-terminal");
 		(yyval.symbolInfo)->setParams((yyvsp[0].symbolInfo)->getParams());
 		(yyval.symbolInfo)->addChildren((yyvsp[0].symbolInfo));
 	}
-#line 2805 "y.tab.cpp"
+#line 2807 "y.tab.cpp"
     break;
 
   case 79:
-#line 1004 "1905066.y"
+#line 1006 "1905066.y"
           {
 		printLog("argument_list : ");
 		(yyval.symbolInfo) = new SymbolInfo("argument_list", "non-terminal");
 	}
-#line 2814 "y.tab.cpp"
+#line 2816 "y.tab.cpp"
     break;
 
   case 80:
-#line 1010 "1905066.y"
+#line 1012 "1905066.y"
                                              {
 		printLog("arguments : arguments COMMA logic_expression");
 		(yyval.symbolInfo) = new SymbolInfo("arguments", "non-terminal");
@@ -2822,22 +2824,22 @@ yyreduce:
 		(yyval.symbolInfo)->addParam((yyvsp[0].symbolInfo));					 
 		(yyval.symbolInfo)->addChildren({(yyvsp[-2].symbolInfo), (yyvsp[-1].symbolInfo), (yyvsp[0].symbolInfo)});
 	}
-#line 2826 "y.tab.cpp"
+#line 2828 "y.tab.cpp"
     break;
 
   case 81:
-#line 1017 "1905066.y"
+#line 1019 "1905066.y"
                            {
 		printLog("arguments : logic_expression");
 		(yyval.symbolInfo) = new SymbolInfo("arguments", "non-terminal");
 		(yyval.symbolInfo)->addParam((yyvsp[0].symbolInfo));
 		(yyval.symbolInfo)->addChildren((yyvsp[0].symbolInfo));
 	}
-#line 2837 "y.tab.cpp"
+#line 2839 "y.tab.cpp"
     break;
 
 
-#line 2841 "y.tab.cpp"
+#line 2843 "y.tab.cpp"
 
       default: break;
     }
@@ -3069,7 +3071,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 1025 "1905066.y"
+#line 1027 "1905066.y"
 
 extern "C" {
 int main()
